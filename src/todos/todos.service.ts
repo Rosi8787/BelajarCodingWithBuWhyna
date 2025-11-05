@@ -1,4 +1,4 @@
-import { Injectable,NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Todo } from './todos.entity';
 
 @Injectable()
@@ -14,7 +14,8 @@ export class TodoService {
 
   findOne(id: number): Todo {
     const todo = this.todos.find((t) => t.id === id);
-    if (!todo) throw new NotFoundException(`Todo dengan id ${id} tidak ditemukan`);
+    if (!todo)
+      throw new NotFoundException(`Todo dengan id ${id} tidak ditemukan`);
     return todo;
   }
 
@@ -32,7 +33,8 @@ export class TodoService {
 
   remove(id: number): void {
     const index = this.todos.findIndex((t) => t.id === id);
-    if (index === -1) throw new NotFoundException(`Todo dengan id ${id} tidak ditemukan`);
+    if (index === -1)
+      throw new NotFoundException(`Todo dengan id ${id} tidak ditemukan`);
     this.todos.splice(index, 1);
   }
 }
