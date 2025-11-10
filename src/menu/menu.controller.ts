@@ -8,6 +8,8 @@ import {
   Get,
   Query,
 } from '@nestjs/common';
+
+import { MenuService } from './menu.service';
 import { get } from 'http';
 
 @Controller('menu')
@@ -20,6 +22,8 @@ export class MenuController {
   Find(@Query('age') age: number, @Query('breed') breed: string) {
     return `This action return all by age : ${age} and breed ${breed}`;
   }
+
+  
   @Post()
   Create(): string {
     return 'this action adds a new user';

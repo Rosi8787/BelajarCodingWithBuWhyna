@@ -16,13 +16,14 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     try {
-      const { name, email, password } = createUserDto;
+      const { name, email, password,role } = createUserDto;
       const createUser = await this.prisma.user.create({
         data: {
           name,
           email,
           //password,
-          password : await this.bcrypt.hashPassword(password)
+          password : await this.bcrypt.hashPassword(password),
+          role
         },
       });
 
@@ -66,9 +67,9 @@ export class UsersService {
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     try {
-      const {name,email,password} = updateUserDto
+      const {name,email,password,role} = updateUserDto
       const findUser = await this.prisma.user.findFirst({
-        where: {id: id}
+        where: {id: id }
       })
       if (!findUser){
         return{
@@ -76,13 +77,14 @@ export class UsersService {
           massage: `User does not exists`,
           data: null
         }
-      }
+      } 
 
       const updateUser = await this.prisma.user.update({
         where: {id: id},
         data: {
           name: name?? findUser.name,
           email: email?? findUser.email,
+          role: role?? findUser.role,
           // password: password?? findUser.password,
           password: password ? await this.bcrypt.hashPassword(password): findUser.password
         }
